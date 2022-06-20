@@ -1,5 +1,7 @@
 package Ex1;
 
+import incase.*;
+
 public class Program {
 
     public static void main(String[] args) {

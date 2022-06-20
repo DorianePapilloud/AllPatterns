@@ -5,30 +5,33 @@ import java.util.List;
 
 public class CompositeTeam implements Playable{
 
-    List<Playable> team = new ArrayList<Playable>();
-
-    public void add(LeafPlayer leafPlayer) {
-        team.add(leafPlayer);
+    public void add(Playable p) {
+        myPlayers.add(p);
     }
 
-    @Override
+    public void remove(Playable p) {
+        myPlayers.remove(p);
+    }
+
     public void cry() {
-        for(Playable p : team){
+        for (Playable p : myPlayers)
             p.cry();
-        }
     }
 
     public void enterField() {
+        for (Playable p : myPlayers)
+            p.enterField();
     }
 
-    @Override
+    public void shoot() {
+        for (Playable p : myPlayers)
+            p.shoot();
+    }
+
     public void simulateInjury() {
-
+        for (Playable p : myPlayers)
+            p.simulateInjury();
     }
 
-    public void remove(CompositeTeam compositeTeam) {
-    }
-
-    public void add(CompositeTeam team1) {
-    }
+    private final List<Playable> myPlayers = new ArrayList<Playable>();
 }

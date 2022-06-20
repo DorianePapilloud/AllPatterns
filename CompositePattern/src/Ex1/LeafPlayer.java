@@ -2,25 +2,25 @@ package Ex1;
 
 public class LeafPlayer implements Playable {
 
-    int player;
+    private final int name;
 
-    public LeafPlayer(int player) {
-        this.player = player;
+    public LeafPlayer(int name) {
+        this.name = name;
     }
 
-    @Override
     public void cry() {
-        System.out.println(player + "is crying");
+        System.out.println(name + " is crying");
     }
 
-    @Override
     public void enterField() {
-        System.out.println(player + "has entered the field");
+        System.out.println(name + " is entering field");
     }
 
-    @Override
+    public void shoot() {
+        System.out.println(name + " is shooting");
+    }
+
     public void simulateInjury() {
-        System.out.println(player + "is simulating that bastard");
+        System.out.println(name + " is simulating an Injury");
     }
-
 }

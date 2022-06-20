@@ -1,9 +1,20 @@
 package Ex1;
 
-public class ConcreteComponentCarSport implements ComponentCar{
+public class ConcreteComponentCarSport extends ComponentCar{
 
-    @Override
-    public void operation() {
-        System.out.println("Concrete operation for Car Sport");
+    protected static final int SECURITY_LEVEL = 30;
+    protected static final int PRICE = 35000;
+
+    public ConcreteComponentCarSport() {
+        this.description = "Sport";
     }
+
+    public int getCost() {
+        return PRICE;
+    }
+
+    public int getSecurityLevel() {
+        return SECURITY_LEVEL;
+    }
+
 }

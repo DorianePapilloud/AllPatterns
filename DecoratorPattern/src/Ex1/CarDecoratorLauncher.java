@@ -1,5 +1,7 @@
 package Ex1;
 
+import Ex1.Decoratorr.*;
+
 public class CarDecoratorLauncher {
 
     public static void main(String[] args) {

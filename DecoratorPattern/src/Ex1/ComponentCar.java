@@ -1,13 +1,14 @@
 package Ex1;
 
-public interface ComponentCar {
+public abstract class ComponentCar {
 
-    int getCost();
-    int getSecurityLevel();
-    String getDescription();
+    protected String description = "";
 
+    public String getDescription() {
+        return this.description;
+    }
 
+    public abstract int getCost();
 
-
-
+    public abstract int getSecurityLevel();
 }
