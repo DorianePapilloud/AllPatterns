@@ -1,20 +1,27 @@
 package Ex1;
 
+import Ex1.Adapters.ListAdapterForQueue;
+import Ex1.Adapters.ListAdapterForStack;
+import Ex1.Interfaces.MyQueue;
+import Ex1.Interfaces.MyStack;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class StacksAndQueues {
-
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         List<Integer> list1 = new ArrayList<Integer>();
         list1.add(2);
         list1.add(22);
-        StacksAndQueues.testQueue(new ListAdapterForQueue<Integer>(list1));
+        StacksAndQueues.testQueue(new ListAdapterForQueue<>(list1));
 
         List<Integer> list2 = new ArrayList<Integer>();
         list2.add(3);
         list2.add(3);
-        StacksAndQueues.testStack(new ListAdapterForStack<Integer>(list2));
+        StacksAndQueues.testStack(new ListAdapterForStack<>(list2));
     }
 
     public static void testQueue(MyQueue<Integer> queueAdapter) {
@@ -38,7 +45,7 @@ public class StacksAndQueues {
         System.out.println(stackAdapter.toString());
         stackAdapter.pop();
         System.out.println(stackAdapter.toString());
-        stackAdapter.push(40);;
+        stackAdapter.push(40);
         System.out.println(stackAdapter.toString());
         System.out.println();
     }

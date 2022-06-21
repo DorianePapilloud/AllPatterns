@@ -12,6 +12,8 @@
       <module fileurl="file://$PROJECT_DIR$/IntelliJ.iml" filepath="$PROJECT_DIR$/IntelliJ.iml" />
       <module fileurl="file://$PROJECT_DIR$/IntelliJ.Labs.iml" filepath="$PROJECT_DIR$/IntelliJ.Labs.iml" />
       <module fileurl="file://$PROJECT_DIR$/Labs.iml" filepath="$PROJECT_DIR$/Labs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleExam/ModuleExam.iml" filepath="$PROJECT_DIR$/ModuleExam/ModuleExam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyLabs/MyLabs.iml" filepath="$PROJECT_DIR$/MyLabs/MyLabs.iml" />
       <module fileurl="file://$PROJECT_DIR$/ObserverPattern/ObserverPattern.iml" filepath="$PROJECT_DIR$/ObserverPattern/ObserverPattern.iml" />
       <module fileurl="file://$PROJECT_DIR$/Proxy/Proxy.iml" filepath="$PROJECT_DIR$/Proxy/Proxy.iml" />
       <module fileurl="file://$PROJECT_DIR$/Singleton/Singleton.iml" filepath="$PROJECT_DIR$/Singleton/Singleton.iml" />
