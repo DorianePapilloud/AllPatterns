@@ -1,15 +1,20 @@
 package Ex2;
 
+import Ex2.Houses.BricksHouseConcreteProduct;
+import Ex2.Houses.GlassHouseConcreteProduct;
+import Ex2.Houses.HouseProduct;
+import Ex2.Houses.WoodHouseConcreteProduct;
+
 public class ArchitectOffice {
     public static void main(String[] args)
     {
-        House house1 = new GlassHouse();
+        HouseProduct house1 = new GlassHouseConcreteProduct();
         house1.buildHouse();
         house1.calculatePrice();
-        House house2 = new BricksHouse();
+        HouseProduct house2 = new BricksHouseConcreteProduct();
         house2.buildHouse();
         house2.calculatePrice();
-        House house3 = new WoodHouse();
+        HouseProduct house3 = new WoodHouseConcreteProduct();
         house3.buildHouse();
         house3.calculatePrice();
     }

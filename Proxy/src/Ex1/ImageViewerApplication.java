@@ -1,5 +1,9 @@
 package Ex1;
 
+import Ex1.Proxy.ImageProxy;
+import Ex1.Subject.Image;
+import Ex1.Client.User;
+
 public class ImageViewerApplication {
 
 

@@ -1,5 +1,10 @@
 package Ex1;
 
+import Ex1.SensorManagers.*;
+import Ex1.Sensors.RoadConditionSensor;
+import Ex1.Sensors.SpeedSensor;
+import Ex1.Sensors.TemperatureSensor;
+
 public class CarSensorSingletonLauncher {
     public CarSensorSingletonLauncher() {
     }

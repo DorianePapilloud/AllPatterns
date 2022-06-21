@@ -1,9 +1,7 @@
 package Ex1;
 
-/**
- * Lab 11
- * @author scz
- */
+import Ex1.Context.CoffeeMachine;
+
 public class Program {
 
     public static void main(String[] args) {

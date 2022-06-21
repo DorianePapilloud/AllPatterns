@@ -1,6 +1,7 @@
 package AbstractFactoryExample;
 
 public class ConcreteFactory2 implements AbstractFactory{
+
     @Override
     public AbstractProductA createProductA() {
         return new ProductA2();

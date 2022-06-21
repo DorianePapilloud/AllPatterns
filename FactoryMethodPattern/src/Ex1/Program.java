@@ -1,25 +1,32 @@
 package Ex1;
 
-import incase.*;
+import Ex1.Cars.CarProduct;
+import Ex1.Creators.CarCreator;
+import Ex1.Creators.CoupeConcreteCreator;
+import Ex1.Creators.MinivanConcreteCreator;
+import Ex1.Creators.PickupConcreteCreator;
 
 public class Program {
 
     public static void main(String[] args) {
-        CarCreator coupeCreator = new ConcreteCoupeCreator();
-        CarCreator minivanCreator = new ConcreteMinivanCreator();
-        CarCreator pickupCreator = new ConcretePickupCreator();
-        ProductCar c1 = coupeCreator.orderCar("red");
+        CarCreator coupeCreator = new CoupeConcreteCreator();
+        CarCreator minivanCreator = new MinivanConcreteCreator();
+        CarCreator pickupCreator = new PickupConcreteCreator();
+
+        CarProduct c1 = coupeCreator.orderCar("red");
         System.out.println("Car "
                 + c1.getName()
                 + " " + c1.getColor()
                 + " has been ordered.");
-        ProductCar c2 = minivanCreator.orderCar("red");
+
+        CarProduct c2 = minivanCreator.orderCar("red");
         System.out.println("Car "
                 + c2.getName()
                 + " "
                 + c2.getColor()
                 + " has been ordered.");
-        ProductCar  c3 = pickupCreator.orderCar("red");
+
+        CarProduct c3 = pickupCreator.orderCar("red");
         System.out.println("Car "
                 + c3.getName()
                 + " "

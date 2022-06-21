@@ -1,6 +1,7 @@
 package TemplateMethodExample;
 
 public abstract class AbstractClass {
+
     final void templateMethod(){
         primitiveOperation1();
         notPrimitiveOperation();

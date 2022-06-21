@@ -1,6 +1,6 @@
 package Ex1;
 
-import Ex1.User;
+import Ex1.Client.User;
 
 import java.util.ArrayList;
 import java.util.List;

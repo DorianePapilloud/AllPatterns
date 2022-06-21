@@ -1,6 +1,7 @@
 package StateExample;
 
 public class Context {
+
     private State onState;
     private State offState;
     private State currentState;

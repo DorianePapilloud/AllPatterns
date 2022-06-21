@@ -1,5 +1,13 @@
 package Ex2;
 
+import Ex2.Components.Circle;
+import Ex2.Components.Rectangle;
+import Ex2.Components.Shape;
+import Ex2.Components.Square;
+import Ex2.Decorators.BorderDecorator;
+import Ex2.Decorators.ColorDecorator;
+import Ex2.Decorators.TextureDecorator;
+
 import java.util.ArrayList;
 import java.util.List;
 

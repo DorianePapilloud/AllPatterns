@@ -1,5 +1,8 @@
 package Ex2;
 
+import Ex2.Proxy.ProxyBank;
+import Ex2.Subject.Bank;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

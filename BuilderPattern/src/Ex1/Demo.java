@@ -4,11 +4,17 @@ public class Demo {
 
     public static void main(String[] args) {
 
-        CarBuilder carBuilder = new BerlinCar();
-        CarDirector director = new CarDirector();
-        director.construct();
-        //Car car = ;
+            CarBuilder carBuilder = new BerlinCarBuilder();
+            CarDirector director = new CarDirector(carBuilder);
+            director.construct();
+            Car car = carBuilder.getCar();
+            System.out.println(car);
 
-    }
+            carBuilder = new SportsCarBuilder();
+            director = new CarDirector(carBuilder);
+            director.construct();
+            car = carBuilder.getCar();
+            System.out.println(car);
+        }
 
 }

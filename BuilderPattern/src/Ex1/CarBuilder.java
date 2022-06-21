@@ -1,11 +1,13 @@
 package Ex1;
 
-import javax.print.attribute.standard.MediaSize;
-
-public abstract class CarBuilder {
+public interface CarBuilder {
 
     void buildPower();
     void buildEngine();
-
+    void buildBreaks();
+    void buildSeats();
+    void buildWindows();
+    void buildFuelType();
+    Car getCar();
 
 }

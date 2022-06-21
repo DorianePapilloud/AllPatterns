@@ -1,6 +1,10 @@
 package Ex1;
 
+import Ex1.Components.Leaf.LeafPlayer;
+import Ex1.Composites.CompositeTeam;
+
 public class GameDemo {
+
     public static void main(String[] args) {
 
         LeafPlayer jo = new LeafPlayer(1);
@@ -10,6 +14,7 @@ public class GameDemo {
         jo.cry();
         jean.cry();
         jo.enterField();
+
         CompositeTeam team1 = new CompositeTeam();
         team1.add(jo);
         team1.add(jean);
@@ -27,11 +32,17 @@ public class GameDemo {
         team2.add(martine);
         team2.add(isabelle);
         team2.add(mariePaule);
+
         team2.add(team1);
+
         team2.enterField();
         team2.cry();
         team2.simulateInjury();
+
+        System.out.println("removing");
+
         team2.remove(team1);
+
         team2.simulateInjury();
     }
 }
