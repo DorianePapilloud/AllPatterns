@@ -1,0 +1,357 @@
+-------------------------------------------------------------------------------------- 1) Strategy --------------------------------------------------------------------------------------
+	is a behavioral design pattern that lets you define a family of algorithms, put each of them into a separate class, and make their objects interchangeable
+	est un patron de conception comportemental qui permet de définir une famille d’algorithmes, de les mettre dans des classes séparées et de rendre leurs objets interchangeables.
+	différentes façons de faire, pour arriver au même résultat
+
+
+
+
+-------------------------------------------------------------------------------------- 2) Observer --------------------------------------------------------------------------------------
+	is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects about any events that happen to the object they’re observing
+	est un patron de conception comportemental qui permet de mettre en place un mécanisme de souscription pour envoyer des notifications à plusieurs objets, 
+	au sujet d’événements concernant les objets qu’ils observent.
+
+	Observer pattern = publishers + subscribers
+	- defines a one-to-many dependency between objects.
+	- so that when one object changes state, all of its dependents are notified and updated automatically.
+	Design Principle : Strive for loosely coupled designs between objects that interact.
+	### Participants:
+	1. Subject: knows its observers. Any number of Observer objects may observe a subject. provides an interface for attaching and detaching Observer objects.
+	2. Observer: defines an updating interface for objects that should be notified of changes in a subject.
+	3. ConcreteSubject: stores state of interest to ConcreteObserver objects.
+
+
+
+
+-------------------------------------------------------------------------------------- 3) Decorator --------------------------------------------------------------------------------------
+	is a structural design pattern that lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors.
+	Decorators provide a flexible alternative to subclassing for extending functionality.
+	est un patron de conception structurel qui permet d’affecter dynamiquement de nouveaux comportements à des objets en les plaçant dans des emballeurs qui implémentent ces comportements.
+
+
+
+
+-------------------------------------------------------------------------------------- 4) Factory Method ------------------------------------------------------------------------------- 
+	is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.
+	est un patron de conception de création qui définit une interface pour créer des objets dans une classe mère, mais délègue le choix des types d’objets à créer aux sous-classes.
+	
+
+
+-------------------------------------------------------------------------------------- 5) Abstract Factory ------------------------------------------------------------------------------- 
+	is a creational design pattern that lets you produce families of related objects without specifying their concrete classes.
+	provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+	est un patron de conception qui permet de créer des familles d’objets apparentés sans préciser leur classe concrète.
+
+
+
+
+-------------------------------------------------------------------------------------- 6) Singleton --------------------------------------------------------------------------------------
+	is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.
+	- Synchronized keyword is creating a monitor. A monitor is a piece of code which lock the code for 1 thread at a time.
+ 	- By adding the synchronized keyword tk getInstance(), we force every thread to wait its turn before it can enter the method. That is, no two threads may enter the method at the same time.
+	- The volatile keyword is used on variables that may be modified simultaneously by other threads. This warns the compiler to fetch them fresh each time, rather than caching them in registers.
+	est un patron de conception de création qui garantit que l’instance d’une classe n’existe qu’en un seul exemplaire, tout en fournissant un point d’accès global à cette instance.
+
+
+
+-------------------------------------------------------------------------------------- 7) Command ---------------------------------------------------------------------------------------
+	is a behavioral design pattern that turns a request into a stand-alone object that contains all information about the request. 
+	This transformation lets you pass requests as a method arguments, delay or queue a request’s execution, and support undoable operations.
+	encapsulates a request as an object, thereby letting you parameterize other objects with different requests, queue or log requests, and support undoable operations.
+
+	est un patron de conception comportemental qui prend une action à effectuer et la transforme en un objet autonome qui contient tous les détails de cette action. 
+	Cette transformation permet de paramétrer des méthodes avec différentes actions, planifier leur exécution, les mettre dans une file d’attente ou d’annuler des opérations effectuées.
+
+
+
+
+-------------------------------------------------------------------------------------- 8) Adapter ---------------------------------------------------------------------------------------
+	is a structural design pattern that allows objects with incompatible interfaces to collaborate.
+	converts the interface of a class into another interface the clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.
+	est un patron de conception structurel qui permet de faire collaborer des objets ayant des interfaces normalement incompatibles.
+
+
+
+-------------------------------------------------------------------------------------- 8) Facade ---------------------------------------------------------------------------------------
+	provides a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
+	is a structural design pattern that provides a simplified interface to a library, a framework, or any other complex set of classes.
+	est un patron de conception structurel qui procure une interface offrant un accès simplifié à une librairie, un framework ou à n’importe quel ensemble complexe de classes.
+
+	
+
+
+-------------------------------------------------------------------------------------- 9) Template Method -------------------------------------------------------------------------------
+	is a behavioral design pattern that defines the skeleton of an algorithm in the superclass but lets subclasses override specific steps of the algorithm without changing its structure.
+	defines the skeleton of an algorithm in a method, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.
+	The template is a (final) method that defines an algorithm as a set of steps. One or more of these steps is defined to be abstract and implemented by a subclass.
+
+	est un patron de conception comportemental qui permet de mettre le squelette d’un algorithme dans la classe mère, 
+	mais laisse les sous-classes redéfinir certaines étapes de l’algorithme sans changer sa structure.
+
+
+
+
+-------------------------------------------------------------------------------------- 10) Composite --------------------------------------------------------------------------------------
+	is a structural design pattern that lets you compose objects into tree structures and then work with these structures as if they were individual objects.
+	allows you to compose objects into tree structures to represent partwhole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
+	The concret classes must respect the skeleton
+	est un patron de conception structurel qui permet d’agencer les objets dans des arborescences afin de pouvoir traiter celles-ci comme des objets individuels.
+
+
+
+-------------------------------------------------------------------------------------- 11) State --------------------------------------------------------------------------------------
+	is a behavioral design pattern that lets an object alter its behavior when its internal state changes. It appears as if the object changed its class.
+	allows an object to alter its behavior when its internal state changes. The object will appear to change its class.
+
+	est un patron de conception comportemental qui permet de modifier le comportement d’un objet lorsque son état interne change. L’objet donne l’impression qu’il change de classe.
+
+
+
+-------------------------------------------------------------------------------------- 12) Proxy --------------------------------------------------------------------------------------
+	is a structural design pattern that lets you provide a substitute or placeholder for another object. 
+	A proxy controls access to the original object, allowing you to perform something either before or after the request gets through to the original object.
+	Provide a surrogate or placeholder for another object to control access to it. Use the Proxy Pattern to create a representative object that controls access 
+	to another object, which may be remote, expensive to create or in need of securing.
+	
+	Fournissez un substitut ou un espace réservé pour un autre objet afin de contrôler l'accès à celui-ci.  Par convention et simplicité, le proxy implémente la même interface que la classe à laquelle il se substitue. L'utilisation de ce proxy ajoute une indirection à l'utilisation de la classe à substitue 
+	
+	Utilisation : 
+	- Un proxy est utilisé principalement pour contrôler l'accès aux méthodes de la classe substituée
+	- Il est également utilisé pour simplifier l'utilisation d'un objet « complexe » à la base : par exemple, si l'objet doit être manipulé à distance (via un réseau) ou si l'objet est consommateur de temps
+	
+	est un patron de conception structurel qui vous permet d’utiliser un substitut pour un objet. 
+	Elle donne le contrôle sur l’objet original, vous permettant d’effectuer des manipulations avant ou après que la demande ne lui parvienne.
+
+Remote Proxy
+Allows accessing an object running in another execution environment (example:
+REST calls)
+Virtual Proxy
+Allows the creation of costly objects (in memory for instance) only when needed
+Protection proxy
+Controls access to an object through different access controls mechanisms (example
+: through authentication mechanisms)
+
+
+
+
+-------------------------------------------------------------------------------------- 13) Builder --------------------------------------------------------------------------------------
+	is a creational design pattern that lets you construct complex objects step by step. 
+	The pattern allows you to produce different types and representations of an object using the same construction code.
+
+	Dissocier la construction d’un objet de sa représentation, afin que le même processus de construction ait la possibilité de créer des représentations différentes.
+	Utilisation : 
+	- L'objet final est imposant et sa création complexe
+	- Beaucoup d'arguments doivent être passés à la construction de l'objet afin d'avoir un design lisible
+	- Certains des arguments sont optionnels ou ont plusieurs variations
+
+	est un patron de conception de création qui permet de construire des objets complexes étape par étape. 
+	Il permet de produire différentes variations ou représentations d’un objet en utilisant le même code de construction
+
+
+
+
+
+
+
+
+STRUCTURAL PATTERNS
+
+
+	Adapter (Wrapper):
+		Intent: Converts the interface of a class into another interface clients expect.
+				This lets classes work together that couldn't otherwise because of incompatible interfaces.
+
+		Example 1: In the US, electrical outlets are three-pronged.
+				   When traveling to certain countries in Europe,
+				   electrical outlets require 2-prongs.
+				   To make US electronics work in Europe you can get a set of adapters to create compliance between the two interfaces.
+
+		Example 2: Commonly used to make independently developed class libraries work together.
+		
+	Composite:
+		Intent: Compose objects into tree structures to represent part-whole hierarchies.
+				Lets clients treat individual objects and compositions of objects uniformly.
+
+		Example 1: Although the example is abstract, arithmetic expressions are Composites.
+				   An arithmetic expression consists of an operand, an operator (+ - * /),
+				   and another operand. The operand can be a number, or another arithmetic expression.
+				   Thus, 2 + 3 and (2 + 3) + (4 * 6) are both valid expressions.
+
+		Example 2: Swing where all components are containers, allowing components to be held within components.
+		
+	Decorator:
+		Intent: Attach additional responsibilities to an object dynamically.
+				Provide a flexible alternative to sub-classing for extending functionality.
+
+		Example 1: Although paintings can be hung on a wall with or without frames,
+				   frames are often added, and it is the frame which is actually hung on the wall.
+				   Prior to hanging, the paintings may be matted and framed, with the painting,
+				   matting, and frame forming a single visual component.
+
+		Example 2: Java I/O where InputStream and OutputStream are standard interfaces where their capabilities
+				   can be extended by being decorated with other compatible streams.
+				   
+	Façade:
+		Intent: Provide a unified interface to a set of interfaces in a subsystem.
+				Defines a high -level interface that makes the subsystem easier to use.
+
+		Example 1: Consumers encounter a Facade when ordering from a catalog.
+				   The consumer calls one number and speaks with a customer service representative.
+				   The customer service representative acts as a Facade,
+				   providing an interface to the order fulfillment department,
+				   the billing department, and the shipping department.
+
+		Example 2: Web Service
+
+	proxy:
+		Intent: Provide a surrogate or placeholder for another object to control access to it.
+
+		Example 1: As shareholders in a company, you can either go to a meeting and vote,
+				   or you can place a proxy vote. The proxy vote is handled by an intermediary,
+				   but represents the actual vote.
+
+		Example 2: Remote interfaces in EJB and Java’s RMI implementation.
+		
+	
+BEHAVIORAL PATTERNS	
+		
+	Command :
+		Intent: Encapsulate a request as an object, thereby letting you parameterize clients with different requests,
+				queue or log requests, and support undoable operations.
+
+		Example 1: The "check" at a diner is an example of a Command pattern.
+				   The waiter or waitress takes an order, or command from a customer,
+				   and encapsulates that order by writing it on the check.
+				   The order is then queued for a short order cook.
+				   Note that the pad of "checks" used by different diners is not dependent on the menu,
+				   and therefore they can support commands to cook many different items.
+
+		Example 2: Java’s Threading system
+							 Java’s Swing action commands
+							 Struts Action commands.
+							 
+	Observer :
+		Intent: Define a one-to-many dependency between objects so that when one object changes state,
+				all its dependents are notified and updated automatically.
+
+		Example 1: Some auctions demonstrate this pattern.
+				   Each bidder possesses a numbered paddle that is used to indicate a bid.
+				   The auctioneer starts the bidding, and "observes" when a paddle is raised to accept the bid.
+				   The acceptance of the bid changes the bid price,
+				   which is broadcast to all of the bidders in the form of a new bid.
+
+		Example 2: Most UI toolkits
+				   ORM Frameworks
+	
+	State:
+		 	
+		Intent: Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.
+
+		Example 1: This pattern can be observed in a vending machine.
+				   Vending machines have states based on the inventory,
+				   amount of currency deposited, the ability to make change,
+				   the item selected, etc. When currency is deposited and a selection is made,
+				   a vending machine will either deliver a product and no change, deliver a product and change,
+				   deliver no product due to insufficient currency on deposit,
+				   or deliver no product due to inventory depletion.
+
+		Example 2: Web Servers
+				   Real-time software
+
+	Strategy :
+		 	
+		Intent: Define a family of algorithms, encapsulate each one, and make them interchangeable.
+				Lets the algorithm vary independently from clients that use it.
+
+		Example 1: Modes of transportation to an airport is an example of a Strategy.
+		Several options exist, such as driving one's own car, taking a taxi, an airport shuttle,
+		a city bus, or a limousine service. For some airports,
+		subways and helicopters are also available as a mode of transportation to the airport.
+		Any of these modes of transportation will get a traveler to the airport,
+		and they can be used interchangeably. The traveler must chose the Strategy based on tradeoffs between cost,
+		convenience, and time.
+
+		Example 2: Comparator / Comparable interfaces in Java Collections.
+		
+	Template Method:
+		 	
+		Intent: Define the skeleton of an algorithm in an operation,
+				deferring some steps to subclasses. Lets subclasses
+				redefine certain steps of an algorithm without changing the algorithm's structure.
+
+		Example 1: Home builders use the Template Method when developing a new subdivision.
+		A typical subdivision consists of a limited number of floor plans,
+		with different variations available for each floor plan. Within a floor plan,
+		the foundation, framing, plumbing, and wiring will be identical for each house.
+		Variation is introduced in the latter stages of construction to produce a wider variety of models.
+
+		Example 2: Template-oriented websites
+                     CMS
+					 
+CREATIONNAL PATTERNS:
+	Abstract Factory:
+	
+		Intent: Provides an interface for creating families of related or dependent objects without specifying their concrete class.
+
+		Example 1: The pattern is found in the sheet metal stamping equipment used in the manufacture of Japanese automobiles.
+				   The stamping equipment is an Abstract Factory which creates auto body parts.
+				   The same machinery is used to stamp right hand doors, left hand doors, right front fenders,
+				   left front fenders, hoods, etc. for different models of cars.
+				   Through the use of rollers to change the stamping dies,
+				   the concrete classes produced by the machinery can be changed within three minutes.
+
+		Example 2: 
+				   java.sql.Connection allows the creation of Statements, PreparedStatements, CallableStatements for each database flavor.
+				   javax.swing.LookAndFeel allows switching between several L&F for the components displayed.
+	
+	Builder:
+		Intent: Separate the construction of a complex object from its representing
+				so that the same construction process can create different representations.
+                                                                                        
+		Example 1: The pattern is used by fast food restaurants to construct children’s meals.
+				   Children’s meals typically consist of a main item, a side item,
+				   a drink, and a toy (.e.g., a hamburger, fires, coke, and toy car).
+				   Note that there can be variation in the contents of the children’s meal,
+				   but the construction process is the same. Whether a customer orders a hamburger,
+				   cheeseburger, or chicken the process is the same.
+				   The employee at the counter directs the crew to assemble a main item, side item, a toy.
+				   These items are then placed in a bag.
+				   The drink is placed in a cup and remains outside of the bag.
+				   This same process is used at competing restaurants.
+
+		Example 2: Creating an Input Stream in Java delegates the creation of an underlying
+				   OS Specific input stream to a native library.
+				   This construction process is exactly the same from client perspective but how the object is created may differ.
+				   
+	Factory Method:
+		Intent: Define an interface for creating an object, but let subclasses decide which class to instantiate.
+				Lets a class defer instantiation to subclasses.
+
+		Example 1: Injection molding presses demonstrate this pattern.
+				   Manufacturers of plastic toys process plastic molding powder,
+				   and inject the plastic into molds of the desired shapes.
+				   The class of toy (car, action figure, etc.) is determined by the mold.
+
+		Example 2:  java.net.URLConnection – allows users to decide which protocol to use.
+					JDBC DriverManager.getConnection
+					
+	Singleton:
+		Intent: Ensure a class only has one instance and provide a global point of access to it.
+
+		Example 1: The Singleton pattern in named after the singleton set,
+				   which is defined to be a set containing one element.
+				   The office of the President of the United States is a Singleton.
+				   The United States Constitution specifies the means by which a president is elected,
+				   limits the term of office, and defines the order of succession.
+				   As a result, there can be at most one active president at any given time.
+				   Regardless of the personal identity of the active president, the title,
+				   “The President of the United States” is a global point of access that identifies the person in the office.
+
+		Example 2:  Logger
+					Configuration
+					Accessing resources in shared mode
+					System.in, System.out, System.err
+					AWT Thread
+
+
+

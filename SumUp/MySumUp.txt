@@ -1,0 +1,1465 @@
+# Patterns
+
+###################################################### 1. Strategy pattern ##############################################################3
+
+Main class will declare Interface A, Interface B etc...
+
+The Strategy Pattern
+• defines a family of algorithms,
+• encapsulates each one,
+• and makes them interchangeable.
+Strategy lets the algorithms vary independently
+from clients that use it.
+
+Applicability
+– Many classes differ in only their behavior
+– Client needs different variants
+of an algorithm
+• Consequences
+– Code is more extensible with
+new strategies
+• Compare to conditionals
+– Separates algorithm from
+context
+• each can vary independently
+– Adds objects and dynamism
+• code harder to understand
+– Common strategy interface
+• may not be needed for all Strategy implementations – may be extra overhead
+
+# **Strategy Pattern in Java**
+
+---
+
+- [Design Patterns](http://www.javabyexamples.com/category/design-patterns)
+- [java-design-patterns](http://www.javabyexamples.com/tag/java-design-patterns)
+
+## **1. Overview**
+
+In this tutorial, we're going to investigate the Strategy Pattern and see how we can implement it in Java.
+
+## **2. When to Implement**
+
+Assume that we have an algorithm. It can be sorting a list of numbers or outputting the log statements. There are multiple ways of sorting numbers. Similarly, there are multiple ways to output log statements.
+
+If we aren't careful, we can bake these algorithms into the client code directly. Consequently, we lose the chance of changing the algorithm at runtime - like switching to a variant.
+
+Moreover, if an algorithm needs to be used by multiple clients, each client writes the same code causing code duplication. As a result, the algorithm code will be hard to update and maintain.
+
+We can avoid these problems by defining classes that encapsulate different algorithms. **An algorithm encapsulated in this way is called a strategy**.
+
+## **3. How to Implement**
+
+We must first have an interface representing an algorithm. Then we must provide multiple implementations to serve as different strategies.
+
+We'll work with the duck abstraction. A duck can fly and quack. Thus we have two interfaces corresponding to these behaviors: *Flyable* and *Quackable*. And we'll provide different implementations for these interfaces.
+
+Let's start with the *Flyable* interface*:*
+
+```
+public interface Flyable {
+
+    void fly();
+}
+```
+
+Select
+
+*Flyable* has a single method, *fly*. It also has two implementations.
+
+```
+public class FlyWithWings implements Flyable {
+
+    public void fly() {
+        System.out.println("I fly with my wings!");
+    }
+}
+```
+
+Select
+
+```
+public class FlyNoWay implements Flyable {
+
+    public void fly() {
+        System.out.println("I cannot fly!");
+    }
+}
+```
+
+Select
+
+Then we have the *Quackable* interface:
+
+```
+public interface Quackable {
+
+    void quack();
+}
+```
+
+Select
+
+We also defined two implementations for it.
+
+```
+public class Squeak implements Quackable {
+
+    public void quack() {
+        System.out.println("Squeak!");
+    }
+}
+```
+
+Select
+
+```
+public class MuteQuack implements Quackable {
+
+    public void quack() {
+        System.out.println("Sshhh!");
+    }
+}
+```
+
+Select
+
+At this moment, we have two algorithms - flying and quacking algorithms. And there are two different versions for each algorithm.
+
+The client code - in this case the *Duck* class - can make use of these algorithms through composition.
+
+```
+public class Duck {
+
+    private Flyable flyBehavior;
+    private Quackable quackBehavior;
+
+    public Duck() {
+        flyBehavior = new FlyNoWay();
+        quackBehavior = new MuteQuack();
+    }
+
+    public void setFlyBehavior(Flyable flyBehavior) {
+        this.flyBehavior = flyBehavior;
+    }
+
+    public void setQuackBehavior(Quackable quackBehavior) {
+        this.quackBehavior = quackBehavior;
+    }
+
+    public void performFly() {
+        flyBehavior.fly();
+    }
+
+    public void performQuack() {
+        quackBehavior.quack();
+    }
+}
+```
+
+Select
+
+Here, the *Duck* class holds references to both *Flyable* and *Quackable* interfaces. Moreover, these references can change at runtime through setter methods:
+
+`public class MainClient {
+
+    public static void main(String[] args) {
+        Duck duck = new Duck();
+        duck.performQuack();
+        duck.performFly();
+
+        duck.setFlyBehavior(new FlyWithWings());
+        duck.setQuackBehavior(new Squeak());
+        duck.performQuack();
+        duck.performFly();
+    }
+}`
+
+#######################################################  2. Observer pattern ###################################################### 
+
+The Observer Pattern
+• defines a one-to-many
+dependency between objects
+• so that when one
+object changes state, all of its
+dependents are notified and
+updated automatically.
+
+Applicability
+– When an abstraction has two
+aspects, one dependent on the
+other, and you want to reuse each
+– When change to one object requires
+changing others, and you don’t know
+how many objects need to be
+changed
+– When an object should be able to
+notify others without knowing who
+they are
+• Consequences
+– Loose coupling between subject and
+observer, enhancing reuse
+– Support for broadcast
+communication
+– Notification can lead to further
+updates, causing a cascade effect
+
+# **Observer Pattern in Java**
+
+---
+
+##1. Overview**
+
+The Observer pattern allows us to establish a communication channel between two parties: the subject and observer. It's also known as the publish-subscribe pattern. Observers register themselves to the subject for some state change. Additionally, this relation is dynamic in that observers can come and go at runtime. In the end, whenever the state changes, the subject notifies all its observers and updates them with new data.
+
+## **2. Motives**
+
+Let's talk more about the motives and use cases.
+
+**Firstly, the observer pattern demands two different roles.** The class in the subject role owns or manages some state whereas the observer classes act on the state changes. To have our classes fulfill a single well-defined responsibility, we disallow the observers to access the state directly. **In other words, we separate the generation of data from its consumption.** Then by applying the pattern, we establish a well-defined channel between the subject and its observers.
+
+Another motive to apply the pattern is that **the number of observers can change during the lifetime of the application.** New observers can register themselves while the existing ones leave. This motive also plays an important role in shaping the design's contract - i.e. *addObserver*, *removeObserver,* etc.
+
+**The Observer pattern also allows us to work with multiple observer classes that work on the same data in different ways.** The subject doesn't need to know how the observer consumes the data. The contract between two parties enables them to work in a loosely-coupled manner.
+
+## **3. How To Implement**
+
+Now, we'll see how we can implement the Observer pattern. For this purpose, we'll use the weather station example. The weather station publishes the latest weather data. Then the displays that register themselves as observers show the changes for a specific data type.
+
+### **3.1. Implement *Observer***
+
+**The *Observer* interface defines the recipient part that acts on the data changes:**
+
+```
+public interface Observer {
+
+    void update(float temp, float humidity, float pressure);
+}
+```
+
+Select
+
+Github
+
+Here, the *update* method defines three different data types: *temp*, *humidity*, and *pressure*.
+
+Next, we'll provide some *Observer* implementations:
+
+```
+public class ForecastDisplay implements Observer {
+
+    public void update(float temp, float humidity, float pressure) {
+        // Process the change
+        System.out.println(String.format("%f\t%f\t%f", temp, humidity, pressure));
+    }
+}
+```
+
+Select
+
+Github
+
+```
+public class StatisticsDisplay implements Observer {
+
+    public void update(float temp, float humidity, float pressure) {
+        // Process the change
+        System.out.println(String.format("%f\t%f\t%f", temp, humidity, pressure));
+    }
+}
+```
+
+Select
+
+Github
+
+These classes use the same weather data to perform different calculations. For example, *ForecastDisplay* tries to predict future values, whereas *StatisticsDisplay* generates charts using historical data.
+
+### **3.2. Implement *Subject***
+
+The subject has two main responsibilities. **One is managing the observers and providing means to register and unregister them. Secondly, it must notify the observers about the latest state changes.**
+
+```
+public interface Subject {
+
+    void registerObserver(Observer observer);
+
+    void removeObserver(Observer observer);
+
+    void notifyObservers();
+}
+```
+
+Select
+
+Github
+
+Here, we have the *Subject* interface. The *registerObserver* and *removeObserver* methods carry out observer management duty. And the *notifyObservers* method handles the notification.
+
+We'll now provide a *Subject* implementation, *WeatherStation*:
+
+```
+public class WeatherStation implements Subject {
+
+    private final List<Observer> observers;
+    private float temp;
+    private float humidity;
+    private float pressure;
+
+    public WeatherStation() {
+        observers = new ArrayList<>();
+    }
+
+    public void registerObserver(Observer observer) {
+        if (!observers.contains(observer)) {
+            this.observers.add(observer);
+        }
+    }
+
+    public void removeObserver(Observer observer) {
+        this.observers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        for (Observer o : observers) {
+            o.update(temp, humidity, pressure);
+        }
+    }
+
+    public void measurementsChanged() {
+        notifyObservers();
+    }
+
+    public void setMeasurements(float temp, float humidity, float pressure) {
+        this.temp = temp;
+        this.humidity = humidity;
+        this.pressure = pressure;
+        measurementsChanged();
+    }
+}
+```
+
+Select
+
+Github
+
+Whenever the weather values change - by an invocation of *setMeasurements* -*WeatherStation* notifies the registered observers. In summary, it iterates over the list of observers and calls their *update* method with the updated data.
+
+### **3.3. Sample Application**
+
+Lastly, we'll write a sample application to showcase the subject and observers:
+
+```
+public static void main(String[] args) {
+    final WeatherStation weatherStation = new WeatherStation();
+
+    final CurrentConditions currentConditions = new CurrentConditions();
+    weatherStation.registerObserver(currentConditions);
+    final ForecastDisplay forecastDisplay = new ForecastDisplay();
+    weatherStation.registerObserver(forecastDisplay);
+    final StatisticsDisplay statisticsDisplay = new StatisticsDisplay();
+    weatherStation.registerObserver(statisticsDisplay);
+
+    final Random random = new Random();
+    for (int i = 0; i < 5; i++) {
+        weatherStation.setMeasurements(random.nextFloat(), random.nextFloat(), random.nextFloat());
+        System.out.println("***************************************");
+    }
+}
+```
+
+Select
+
+Github
+
+In this example, we're registering three different observers to the *WeatherStation* instance.
+
+A sample run prints:
+
+```
+0.567413	0.376702	0.871033
+0.567413	0.376702	0.871033
+0.567413	0.376702	0.871033
+***************************************
+0.184101	0.862047	0.626799
+0.184101	0.862047	0.626799
+0.184101	0.862047	0.626799
+...
+```
+
+Select
+
+Github
+
+As seen in the output, each observer prints the results after performing its own calculation on three weather data points.
+
+## **4. Summary**
+
+In this tutorial, we detailed the usage of the Observer pattern in Java. We firstly examined the motives regarding why we use the pattern. Then we provided a sample implementation.
+
+#######################################################  3. Decorator pattern ###################################################### 
+
+The Decorator Pattern attaches
+additional responsibilities to an object
+dynamically.
+Decorators provide a flexible
+alternative to subclassing for
+extending functionality.
+
+Applicability
+– To add responsibilities to individual objects dynamically and transparently
+– For responsibilities that can be withdrawn
+– When extension by subclassing is impractical
+• Consequences
+– More flexible than static
+inheritance
+– Avoids monolithic classes
+– Breaks object identity
+– Lots of little objects
+
+# **Decorator Pattern in Java**
+
+---
+
+## **1. Overview**
+
+There are mainly two ways to add new responsibility to a class: inheritance and composition. With inheritance, we rely on the subclasses for the required behavior. With composition, on the other hand, we rely on the composed objects to combine their functionalities and create the required behavior. In this tutorial, we'll look at how we can implement the decorator pattern in Java. It's also known as the wrapper pattern. **In essence, we'll enclose a component in another object that adds the required behavior. The enclosing object is called a decorator.** The decorator implements the interface of the component it decorates so that its presence is transparent to the clients. The decorator forwards the requests to the wrapped object and may perform additional actions.
+
+## **2. Motives**
+
+Let's talk more about the motives for applying the decorator pattern.
+
+Firstly, the composition aspect allows us to add new functionalities dynamically. For example, we can create a logging decorator around an application service, then further decorate it for the transaction support. Then we can add a final layer with a caching decorator. This flexibility comes from the fact that decorators can be combined in any way possible. Conversely, it can produce an explosion of subclasses to support the same level of combinations.
+
+Secondly, we know that decorators implement the interface of the wrapped component. This means that the clients won't notice whether they're interacting with a decorator or with the actual component. This enables us to modify the object hierarchy without affecting the clients.
+
+Also, decorators focus on a single responsibility. While they don't know the details of the other decorators or implementations, they also don't make any assumptions about them. This leads to a loosely-coupled design.
+
+Lastly, subclassing may not be an option in some cases. For example, the class may be final or not visible for inheritance.
+
+## **3. How to Implement**
+
+We'll use the coffee shop abstraction to demonstrate the decorator pattern.
+
+We have the *Beverage* class and several implementations. We'll decorate these beverages with condiments. The condiment decorators enhance the existing functionality when calculating the cost and printing the coffee description.
+
+The *Beverage* class is the main class that we'll work with:
+
+```
+public abstract class Beverage {
+
+    protected String description = "Unknown Beverage";
+
+    public String getDescription() {
+        return description;
+    }
+
+    public abstract double cost();
+}
+```
+
+Select
+
+Github
+
+All subclasses must implement the abstract *cost* method.
+
+We'll next provide some implementations:
+
+```
+public class Espresso extends Beverage {
+
+    public Espresso() {
+        this.description = "Espresso";
+    }
+
+    @Override
+    public double cost() {
+        return 1;
+    }
+}
+public class HouseBlend extends Beverage {
+
+    public HouseBlend() {
+        this.description = "House Blend";
+    }
+
+    @Override
+    public double cost() {
+        return 1.5;
+    }
+}
+```
+
+Select
+
+Github
+
+Here, *Espresso* and *HouseBlend* extend the *Beverage* abstract class. They also implement the *cost* method and update the description.
+
+After covering the actual beverages, we'll next look at *CondimentDecorator* that is the base class for condiments:
+
+```
+public abstract class CondimentDecorator extends Beverage {
+
+    public abstract String getDescription();
+}
+```
+
+Select
+
+Github
+
+**Note that it extends *Beverage*, so the clients can behave condiments as beverages.** It also redefines the *getDescription* method as *abstract*.
+
+Then we'll create several *CondimentDecorator* implementations:
+
+```
+public class Mocha extends CondimentDecorator {
+
+    private final Beverage beverage;
+
+    public Mocha(Beverage beverage) {
+        this.beverage = beverage;
+    }
+
+    @Override
+    public double cost() {
+        return 0.20 + beverage.cost();
+    }
+
+    @Override
+    public String getDescription() {
+        return beverage.getDescription() + ", Mocha";
+    }
+}
+
+public class Whip extends CondimentDecorator {
+
+    private final Beverage beverage;
+
+    public Whip(Beverage beverage) {
+        this.beverage = beverage;
+    }
+
+    @Override
+    public double cost() {
+        return 0.15 + beverage.cost();
+    }
+
+    @Override
+    public String getDescription() {
+        return beverage.getDescription() + ", Whip";
+    }
+}
+```
+
+Select
+
+Github
+
+Notice the instance variables. **Each condiment contains a *Beverage* instance while also extending the *Beverage* class.** Additionally, each *CondimentDecorator* calls the wrapped *Beverage* before/after completing its operation.
+
+Lastly, we have a test application:
+
+```
+public static void main(String[] args) {
+    Beverage b = new Mocha(new Mocha(new Whip(new HouseBlend())));
+    System.out.println(b.getDescription());
+    System.out.println(b.cost());
+}
+```
+
+Select
+
+Github
+
+Here, we're decorating a *HouseBlend* instance with a *Whip* first. Then we're creating two *Mocha* decorators around it.
+
+A sample run prints:
+
+`House Blend, Whip, Mocha, Mocha
+2.05`
+
+#######################################################  4. Factory method pattern ###################################################### 
+
+The Factory Method Pattern defines
+an interface for creating an object, but
+lets subclasses decide which class to
+instantiate. Factory Method lets a class
+defer instantiation to subclasses.
+
+Create objects through inheritance:
+uses a subclass to do the
+creation for you.
+Thus, clients only need to know
+the abstract type they are
+using, the subclass worries
+about the concrete type.
+
+Use this pattern when you want to decouple your client
+code from the concrete classes
+you need to instantiate,
+or you do not know in advance
+all concrete classes you will
+need.
+
+# 5. Abstract Factory Pattern
+
+The Abstract Factory Pattern
+provides an interface for creating
+families of related or dependent
+objects without specifying their
+concrete classes.
+
+Create objects through composition:
+provides an abstract type for
+creating a family of products.
+Subclasses of this type define
+how those products are
+produced.
+To use the factory, instantiate
+one and pass it into some code
+written against the abstract
+type.
+
+Use this pattern when you have families of products you
+need to create and you want to
+make sure your clients create
+products that belong together.
+
+#######################################################  6. Singleton ###################################################### 
+
+The Singleton Pattern ensures a
+class has only one instance, and
+provides a global point of access to it.
+
+Applicability
+– There must be exactly one instance
+of a class
+– When it must be accessible to clients
+from a well-known place
+– When the sole instance should be
+extensible by subclassing, with
+unmodified clients using the subclass
+• Consequences
+– Controlled access to sole instance
+– Reduced name space (vs. global
+variables)
+– Can be refined in subclass or
+changed to allow multiple instances
+– More flexible than class operations
+• Can change later if you need to
+
+# **Singleton Pattern in Java**
+
+---
+
+- [Design Patterns](http://www.javabyexamples.com/category/design-patterns)
+- [java-design-patterns](http://www.javabyexamples.com/tag/java-design-patterns)
+
+## **1. Overview**
+
+It's important for some classes to have exactly one instance. There can be multiple database connections, but there should be only one connection pool. Multiple mappers, but one mapper factory. To ease the usage of class, it should also be accessible by all parts of the application.
+
+In this tutorial, we're going to investigate the Singleton pattern.
+
+## **2. When to Use Singleton?**
+
+Let's first look at when we should use the Singleton pattern.
+
+Firstly, we can use the Singleton pattern when there must be exactly one instance of a class, and it must be accessible to from a well-known access point.
+
+Secondly, we should use it when the sole instance should be extensible by subclassing, and clients should be able to use an extended instance without modifying their code.
+
+## **3. How to Implement Singleton**
+
+We can categorize the Singleton implementations mainly into two groups. The first category is about initialization type: eager or lazy. Then the second category is about the access type: *public static* field or *public static* method.
+
+We'll now provide several implementations to cover these categories.
+
+### **3.1. Eager Initialization, Public Member, Thread-safe**
+
+```
+public class Singleton {
+
+  public static final Singleton INSTANCE = new Singleton();
+
+  private Singleton() {
+    if (INSTANCE != null) {
+      throw new IllegalStateException("Already instantiated");
+    }
+  }
+}
+```
+
+Select
+
+- It is initialized when the class is loaded, hence it is eager.
+- We access the instance through a *public static* member, not through a *public static* method.
+- The constructor includes a check to guarantee that there is only one instance.
+- It is thread-safe since initialization is performed at class loading phase.
+
+### **3.2. Eager Initialization, Static Factory Method, Thread-safe**
+
+```
+public class Singleton {
+
+  private static final Singleton INSTANCE = new Singleton();
+
+  private Singleton() {
+    if (INSTANCE != null) {
+      throw new IllegalStateException("Already instantiated");
+    }
+  }
+
+  public static Singleton getInstance() {
+    return INSTANCE;
+  }
+}
+```
+
+Select
+
+- It is initialized when the class is loaded, hence it is eager.
+- We access the instance through a *public static* method
+- The constructor includes a check to guarantee that there is only one instance.
+- It is thread-safe since initialization is performed at class loading phase.
+
+### **3.3. Enum Singleton**
+
+```
+public enum Singleton {
+  INSTANCE;
+}
+```
+
+Select
+
+- The language guarantees that there will be only one instance.
+- This is the recommended eager implementation.
+
+### **3.4. Lazy Initialization, Synchronized, Thread-safe**
+
+```
+public class Singleton {
+
+  private static Singleton instance;
+
+  private Singleton() {
+    if (instance != null) {
+      throw new IllegalStateException("Already instantiated");
+    }
+  }
+
+  public static synchronized Singleton getInstance() {
+    if (instance == null) {
+      instance = new Singleton();
+    }
+
+    return instance;
+  }
+}
+```
+
+Select
+
+- It is initialized when the instance is requested, hence it is lazy.
+- We access the instance through a *public static* method
+- The constructor includes a check to guarantee that there is only one instance.
+- It is thread-safe since the accessor method is *synchronized***.**
+
+### **3.5. Lazy Initialization, Double-checked Locking, Thread-safe**
+
+```
+public class Singleton {
+
+  private static volatile Singleton instance;
+
+  private Singleton() {
+    if (instance != null) {
+      throw new IllegalStateException("Already instantiated");
+    }
+  }
+
+  public static Singleton getInstance() {
+    if (instance == null) {
+      synchronized (Singleton.class) {
+        if (instance == null) {
+          instance = new Singleton();
+        }
+      }
+    }
+
+    return instance;
+  }
+}
+```
+
+Select
+
+- It is initialized when the instance is first requested, hence it is lazy.
+- We access the instance through a *public static* method
+- The constructor includes a check to guarantee that there is only one instance.
+- It is thread-safe since we're using double-checked locking in the accessor method.
+
+### **3.6. Lazy Initialization, Holder Class, Thread-safe**
+
+```
+public class Singleton {
+
+  private static class SingletonHolder {
+
+    static final Singleton INSTANCE = new Singleton();
+  }
+
+  private Singleton() {
+    if (SingletonHolder.INSTANCE != null) {
+      throw new IllegalStateException("Already instantiated");
+    }
+  }
+
+  public static Singleton getInstance() {
+    return SingletonHolder.INSTANCE;
+  }
+}
+```
+
+Select
+
+- It is initialized when the instance is requested, hence it is lazy.
+- We access the instance through a *public static* method
+- The constructor includes a check to guarantee that there is only one instance.
+- It is thread-safe since the language initializes it once inside holder class.
+
+## Synchronization
+
+But keep in mind that synchronizing a method decreases performance by a
+factor of 100!
+
+public class Singleton {
+
+private static synchronized Singleton getInstance () {
+
+private Singleton() {}
+
+public static synchronized Singleton getInstance() {
+
+if(uniqueInstance == null) {
+
+uniqueInstance = new Singleton();
+
+}
+
+return uniqueInstance;
+
+}
+
+## Eager creation
+
+This code is thread safe
+No overhead of creation at runtime!
+
+public class Singleton {
+
+private static Singleton uniqueInstance = new Singleton();
+
+private Singleton () {}
+
+public static Singleton getInstance () {
+
+return uniqueInstance;
+
+}
+
+## Double-checked locking
+
+First check if an instance is created, and if not, THEN synchronize.
+This way, we only synchronize the first time through.
+
+```
+public class Singleton {
+
+    private static Singleton uniqueInstance;
+
+    private Singleton() {
+
+    }
+
+    public static Singleton getInstance() {
+        if(uniqueInstance== null){
+            synchronized (Singleton.class) {
+                if(uniqueInstance== null){
+									uniqueInstance= new Singleton();
+                }
+            }
+        }
+
+        returnuniqueInstance;
+    }
+```
+
+#######################################################  7. Command pattern ###################################################### 
+
+The Command Pattern
+encapsulates a request as an object,
+thereby letting you parameterize other
+objects with different requests, queue
+or log requests,
+and support undoable operations.
+
+Applicability
+– Parameterize objects by an action to perform
+– Specify, queue and execute requests at different times
+– Support undo
+– Support logging changes that can be reapplied after a crash
+– Structure a system around high-level operations built out of primitives
+• Consequences
+– Decouples the object that invokes the operation from the one that performs it
+– Since commands are objects they can be explicitly manipulated
+– Can group commands into composite commands
+– Easy to add new commands without changing existing code
+
+#######################################################  8. Adapter and Facade pattern ###################################################### 
+
+The Adapter Pattern
+converts the interface of a class into
+another interface the clients expect.
+Adapter lets classes work together that
+couldn’t otherwise because of
+incompatible interfaces.
+
+The Façade Pattern
+provides a unified interface to a set of
+interfaces in a subsystem.
+Facade defines a higher-level interface
+that makes the subsystem easier to
+use.
+
+Applicability
+– You want to provide a simple
+interface to a complex subsystem
+– You want to decouple clients from
+the implementation of a subsystem
+– You want to layer your subsystems
+• Consequences
+– It shields clients from the complexity
+of the subsystem, making it easier to
+use
+– Decouples the subsystem and its
+clients, making each easier to change
+– Clients that need to can still access
+subsystem classes
+
+# **Adapter Pattern in Java**
+
+---
+
+## **1. Overview**
+
+In this tutorial, we'll look into the use cases of Adapter Pattern and how to implement it in Java.
+
+## **2. When to Implement**
+
+Sometimes **a class can't be reused only because its interface doesn't match the domain-specific interface**.
+
+Let's assume that we have an interface for counting animals, *AnimalCounter* with the *countAnimal* method. Then there came a time when we need to integrate with another party. They have a similar interface and functionality, *Counter* with the *count* method. However, we can't directly use it because our system is set up according to *AnimalCounter*.
+
+Another example can be the *Enumeration* and *Iterator* interfaces from JDK. The early versions of Java introduced *Enumeration*, but now *Iterator* is the recommended class for iteration purposes.
+
+In the end, to work with both interfaces and their implementations, we can use the Adapter Pattern. **The adapter will serve as the middle man, performing adaptation between different interface methods**.
+
+## **3. How to Implement**
+
+We'll first define two class hierarchies that provide similar functionality.
+
+Firstly, we have the *Duck* interface for simulating ducks:
+
+```
+public interface Duck {
+
+    void quack();
+
+    void fly();
+}
+```
+
+Select
+
+```
+public class MallardDuck implements Duck {
+
+    @Override
+    public void quack() {
+        System.out.println("Quack quack...");
+    }
+
+    @Override
+    public void fly() {
+        System.out.println("Fly...");
+    }
+}
+```
+
+Select
+
+The *Duck* interface has *quack* and *fly* methods.
+
+Secondly, we have the *Turkey* interface which has similar methods as *Duck:*
+
+```
+public interface Turkey {
+
+    void gobble();
+
+    void fly();
+}
+```
+
+Select
+
+```
+public class WildTurkey implements Turkey {
+
+    @Override
+    public void gobble() {
+        System.out.println("Gobble gobble...");
+    }
+
+    @Override
+    public void fly() {
+        System.out.println("Short distance flight...");
+    }
+}
+```
+
+Select
+
+However, it has the *gobble* method instead of *quack*. They both have the *fly* method, but the behaviors may differ.
+
+So **if we want to use the *Turkey* instances as *Duck*, we must create an adapter**. The adapter will behave as *Duck* and will use a *Turkey* instance behind the scenes:
+
+```
+public class TurkeyAdapter implements Duck {
+
+    private final Turkey turkey;
+
+    public TurkeyAdapter(Turkey turkey) {
+        this.turkey = turkey;
+    }
+
+    @Override
+    public void quack() {
+        turkey.gobble();
+    }
+
+    @Override
+    public void fly() {
+        for (int i = 0; i < 5; i++) {
+            turkey.fly();
+        }
+    }
+}
+```
+
+Select
+
+Here, *TurkeyAdapter* implements the *Duck* interface, because we want to treat the *Turkey* objects as *Duck*. *TurkeyAdapter* also gets a reference to a backing *Turkey* object. This way, the adapter can forward calls to this object. For delegation purposes, *TurkeyAdapter* calls the *fly* method of *Turkey* five times. For the *quack* method, it just delegates to *gobble*.
+
+Finally, let's see the client code:
+
+```
+public class ClientMain {
+
+    public static void main(String[] args) {
+        Duck duck = new MallardDuck();
+        Turkey turkey = new WildTurkey();
+
+        Duck turkeyAdapter = new TurkeyAdapter(turkey);
+        System.out.println("----Turkey");
+        turkey.gobble();
+        turkey.fly();
+
+        System.out.println("----Duck");
+        testIt(duck);
+
+        System.out.println("----Turkey Adapter");
+        testIt(turkeyAdapter);
+    }
+
+    public static void testIt(Duck duck) {
+        duck.quack();
+        duck.fly();
+    }
+}
+```
+
+Select
+
+When we run the client, we can see the adapter in action:
+
+```
+----Turkey
+Gobble gobble...
+Short distance flight...
+----Duck
+Quack quack...
+Fly...
+----Turkey Adapter
+Gobble gobble...
+Short distance flight...
+Short distance flight...
+Short distance flight...
+Short distance flight...
+Short distance flight...
+```
+
+Select
+
+## **4. Summary**
+
+In this tutorial, we've investigated the Adapter Pattern and looked at its implementation in Java.
+
+#######################################################  9. Template Method Pattern  ###################################################### 
+
+defines the skeleton of an algorithm in
+a method, deferring some steps to
+subclasses.
+Template Method lets subclasses
+redefine certain steps of an algorithm
+without changing the algorithm’s
+structure.
+
+The template is a (final) method that defines an
+algorithm as a set of steps.
+One or more of these steps is defined to be abstract
+and implemented by a subclass.
+
+- Applicability
+– When an algorithm consists of
+varying and invariant parts that must
+be customized
+– When common behavior in
+subclasses should be factored and
+localized to avoid code duplication
+– To control subclass extensions to
+specific operations
+• Consequences
+– Code reuse
+– Inverted “Hollywood” control: don’t
+call us, we’ll call you
+– Ensures the invariant parts of the
+algorithm are not changed by
+subclasses
+
+#######################################################  10. Composite pattern ###################################################### 
+
+The famous tree etc
+
+The Composite Pattern
+allows you to compose objects into
+tree structures to represent partwhole hierarchies.
+Composite lets clients treat individual
+objects and compositions of objects
+uniformly.
+
+In this case we can apply the same operations over both composites
+
+- Applicability
+– You want to represent part-whole
+hierarchies of objects
+– You want to be able to ignore the
+difference between compositions of
+objects and individual objects
+• Consequences
+– Makes the client simple, since it can
+treat objects and composites
+uniformly
+– Makes it easy to add new kinds of
+components
+– Can make the design overly general
+• Operations may not make sense on
+every class
+• Composites may contain only certain
+components
+
+#######################################################  11. State pattern ###################################################### 
+
+The State Pattern
+allows an object to alter its behavior
+when its internal state changes.
+The object will appear to change its
+class.
+
+The object encapsulates its states into
+separate classes: the behavior will change
+along with the internal state.
+From a client perspective, behavior can completely
+change its behavior. Actually, we achieve this with
+composition.
+ 
+#######################################################  12. Proxy pattern ###################################################### 
+
+The Proxy Pattern
+Provide a surrogate or placeholder for
+another object to control access to it.
+
+Use the Proxy
+Pattern to create a
+representative object
+that controls access
+to another object,
+which may be remote,
+expensive to create or
+in need of securing.
+
+This one is to know if a user has access to the full or restricted ressource
+
+Applicability
+– Whenever you need a more
+sophisticated object reference
+than a simple pointer
+• Local representative for a remote
+object
+• Create or load expensive object on
+demand
+• Control access to an object
+• Reference count an object
+• Consequences
+– Introduces a level of indirection
+• Hides distribution from client
+• Hides optimizations from client
+• Adds housekeeping tasks
+
+# **Proxy Pattern in Java**
+
+---
+
+- [Design Patterns](http://www.javabyexamples.com/category/design-patterns)
+- [java-design-patterns](http://www.javabyexamples.com/tag/java-design-patterns)
+
+## **1. Overview**
+
+In this tutorial, we'll examine the use cases of the Proxy Pattern and how we can implement it in Java.
+
+## **2. When To Use**
+
+**A proxy is a surrogate or placeholder for another object** and controls access to it.
+
+There are several cases where we can use the Proxy Pattern.
+
+Firstly, we can create a proxy when we need to initialize an object on demand since it is expensive to create.
+
+Moreover, we can use them when we must control access to the wrapped object.
+
+Proxies are also useful when we want to cache the instances.
+
+## **3. How to Implement**
+
+Generally, we start with an interface and an implementation. The proxy class also implements the interface and holds a reference to the implementation object. As a result, the proxy manages and forwards the method calls to the backing object.
+
+Let's investigate the case where the target object is expensive to create.
+
+```
+public interface ExpensiveService {
+
+    void create();
+}
+```
+
+Select
+
+As the first step, we have the *ExpensiveService* interface.
+
+```
+public class ExpensiveServiceImpl implements ExpensiveService {
+
+    // Expensive initialization
+    public ExpensiveServiceImpl() {
+        System.out.println("Expensive initialization process.");
+    }
+
+    @Override
+    public void create() {
+        System.out.println("Creating");
+    }
+}
+```
+
+Select
+
+Then we have an implementation of *ExpensiveService*. We assume that the construction phase is too expensive and we want to postpone it until needed.
+
+As the last step, the proxy class implements the same interface, *ExpensiveService*. **It'll create an *ExpensiveServiceImpl* instance when the *create* method is first called. Thus the construction will be lazy.**
+
+```
+public class LazyLoadingServiceProxy implements ExpensiveService {
+
+    @Override
+    public void create() {
+        ValueHolder.INSTANCE.create();
+    }
+
+    private static class ValueHolder {
+
+        static final ExpensiveService INSTANCE = new ExpensiveServiceImpl();
+    }
+}
+```
+
+Select
+
+As we can see here, when *LazyLoadingServiceProxy* is created, it doesn't create the *ExpensiveServiceImpl* instance right away.
+
+#######################################################  13. Builder pattern ###################################################### 
+
+The Builder Pattern
+Separate the construction of a
+complex object from its
+representation so that the same
+construction process can create
+different representations.
+
+ß Encapsulates the way a complex object is
+constructed.
+ß Allows objects to be constructed in a multistep and
+varying process (as opposed to one step factories).
+ß Hides the internal representation of the product from
+the client.
+ß Product implementations can be swapped in and out
+because the client only sees an abstract interface.
+
+ß Often used for building composite structures.
+ß Constructing objects requires more domain
+knowledge of the client than when using a Factory.
+
+# **Builder Pattern in Java**
+
+---
+
+## **1. Overview**
+
+In this tutorial, we'll look at the Builder Pattern and how we can implement it in Java.
+
+## **2. When to Use**
+
+Let's say that we have a class with multiple properties. Moreover, it has various construction rules leading to multiple internal representations.
+
+To handle each representation, we can create multiple constructors. However, this can be cumbersome and hard to manage. It also leads to duplicate code.
+
+[Telescoping constructors](http://www.javabyexamples.com/telescoping-constructor-in-java/) can help us in reducing the code duplication. But nevertheless, creating a different class to handle this construction process is a better approach.
+
+## **3. How to Implement**
+
+The Builder Pattern has different flavors. **We'll investigate the builder implementation that is created as an *inner static* class**:
+
+```
+public class Person {
+
+  private final String name;
+
+  private final String lastName;
+
+  private final int age;
+
+  private final String profession;
+
+  private final List<String> hobbies;
+
+  private Person(String name, String lastName, int age, String profession, List<String> hobbies) {
+    this.name = name;
+    this.lastName = lastName;
+    this.age = age;
+    this.profession = profession;
+    this.hobbies = hobbies == null ? new ArrayList<>() : new ArrayList<>(hobbies);
+  }
+
+  // Getters...
+
+  public static Builder builder(String name, String lastName) {
+    return new Builder(name, lastName);
+  }
+
+  public static class Builder {
+
+    private final String name;
+
+    private final String lastName;
+
+    private int age;
+
+    private String profession;
+
+    private List<String> hobbies = new ArrayList<>();
+
+    public Builder(String name, String lastName) {
+      this.name = name;
+      this.lastName = lastName;
+    }
+
+    public Builder age(int age) {
+      if (age < 0) {
+        throw new IllegalArgumentException("Age cannot be smaller than 0");
+      }
+
+      this.age = age;
+      return this;
+    }
+
+    public Builder profession(String profession) {
+      if (profession == null) {
+        throw new IllegalArgumentException("Profession cannot be empty");
+      }
+
+      this.profession = profession;
+      return this;
+    }
+
+    public Builder add(String hobby) {
+      if (hobby == null || hobby.isEmpty()) {
+        throw new IllegalArgumentException("Hobby cannot be empty");
+      }
+
+      this.hobbies.add(hobby);
+      return this;
+    }
+
+    public Person build() {
+      return new Person(name, lastName, age, profession, hobbies);
+    }
+  }
+}
+```
+
+Select
+
+Here we have the *Person* and *Builder* classes. Since the builder class constructs the target object, it must define the same properties. As we can see *Builder* has all the properties *Person* defines.
+
+**Immutability is another important point when working with builders**. The target class must be immutable. Hence Person has a private constructor and doesn't have any setter methods.
+
+**Additionally, the builder class maintains the variants by validating the input**. As a result, we can't have a *Person* object with an inconsistent state.
+
+Lastly, let's look at the client code:
+
+`public class ClientMain {
+
+  public static void main(String[] args) {
+    Person person =
+        new Person.Builder("John", "Doe")
+            .age(20)
+            .profession("Engineer")
+            .add("Fishing")
+            .add("Games")
+            .add("Football")
+            .build();
+
+    Person person2 =
+        Person.builder("Jane", "Doe")
+            .age(20)
+            .profession("Doctor")
+            .add("Fishing")
+            .add("Games")
+            .add("Football")
+            .build();
+  }
+}`
